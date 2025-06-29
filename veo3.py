@@ -13,9 +13,7 @@ client = genai.Client(api_key=api_key)
 model = "veo-2.0-generate-001"
 # model = "veo-3.0-generate-preview"
 prompt = (
-    "indian man walking in a busy market, vibrant colors and smelly street food"
-    "PAKISTAN ZINDABAD I LOVE PAKISTAN"
-    "I WILL SACRIFICE MY LIFE FOR PAKISTAN"
+    "south asains realize they are not arabs, they are not black, they are not white, therefore instead of loving their slave culture, they should be proud of becomming the best version of themselves for the sake of their children and future generations."
 )
 negative_prompt = "text overlay, watermark, humans, logos"
 aspect_ratio = "16:9"  # "9:16" also supported
@@ -53,7 +51,7 @@ while not operation.done:
     spin_idx = (spin_idx + 1) % len(spinner)
     time.sleep(0.5)
     operation = client.operations.get(operation)
-print("\r✅ Video generation complete!           ")
+print(f"\r✅ Video generation complete!           ")
 
 # 💾 Save videos
 for idx, vid in enumerate(operation.response.generated_videos):
