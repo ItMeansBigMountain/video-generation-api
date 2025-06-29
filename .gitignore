@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Environments
+.env
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output/media
+*.mp4
+*.webp
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# ComfyUI temp/output folders (adjust if needed)
+ComfyUI/output/
+ComfyUI/temp/
+
+# Secrets
+*.secret

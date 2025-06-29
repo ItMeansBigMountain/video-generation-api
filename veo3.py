@@ -1,9 +1,11 @@
 import time
 from google import genai
 from google.genai import types
+import os
+from dotenv import load_dotenv
 
-# 🔑 Ask for API key (input once at runtime)
-api_key = ""
+load_dotenv()
+api_key = os.getenv("GOOGLE_VEO_API_KEY")
 
 # 🧠 Initialize client with API key
 client = genai.Client(api_key=api_key)
