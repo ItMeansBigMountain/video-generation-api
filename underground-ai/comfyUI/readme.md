@@ -1,4 +1,0 @@
-- install [comfyUI](https://www.comfy.org/) 
-- create a new project
-- delete everything in there 
-- drag this json file into the page

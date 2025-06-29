@@ -13,14 +13,15 @@ HEADERS = {
 }
 
 # 🎬 Start generation job
-def start_runway_job(prompt, model="gen3", width=1344, height=768, motion=5, duration=5):
+def start_runway_job(prompt, model="gen3", width=1344, height=768, motion=5, duration=5, nsfw=True):
     payload = {
         "text_prompt": prompt,
         "model": model,
         "width": width,
         "height": height,
         "motion": motion,
-        "time": duration
+        "time": duration,
+        "nsfw": nsfw  # ⚠️ Enable adult content
     }
     res = requests.post(f"{BASE_URL}/runway/generate/text", headers=HEADERS, json=payload)
     res.raise_for_status()
@@ -39,11 +40,13 @@ def poll_runway_status(uuid, interval=10, timeout=600):
         data = res.json()
         status = data.get("status")
 
-        if status == "done":
+        if status == "success":
             print("\r✅ Runway video generation complete!        ")
             return data.get("video_url")
         elif status == "failed":
-            raise Exception("❌ Runway generation failed.")
+            err_code = data.get("error_code", "unknown")
+            err_msg = data.get("error", "No message")
+            raise Exception(f"❌ Generation failed. Code {err_code}: {err_msg}")
 
         sys.stdout.write(f"\r⏳ Runway status: {status} {spinner[spin_idx]} ")
         sys.stdout.flush()
@@ -52,11 +55,18 @@ def poll_runway_status(uuid, interval=10, timeout=600):
 
     raise TimeoutError("⏰ Video generation timed out.")
 
-# 💾 Download video file
-def download_video(video_url, filename="videos/runway-output.mp4"):
+# 💾 Download video file + save URL
+def download_video(video_url, filename="videos/runway-output"):
     os.makedirs("videos", exist_ok=True)
-    urllib.request.urlretrieve(video_url, filename)
-    print(f"✅ Downloaded to: {filename}")
+    filename_txt = f"{filename}.txt"
+    filename_mp4 = f"{filename}.mp4"
+
+    with open(filename_txt, "a") as f:
+        f.write(video_url + "\n")
+    print(f"🔗 Video URL saved to {filename_txt}")
+
+    urllib.request.urlretrieve(video_url, filename_mp4)
+    print(f"✅ Downloaded to: {filename_mp4}")
 
 # 💸 Cost estimation
 def estimate_cost(seconds, rate=0.02):
@@ -67,20 +77,23 @@ def estimate_cost(seconds, rate=0.02):
 if __name__ == "__main__":
     prompt = "A cinematic drone shot of a forest in autumn, golden leaves falling, sweeping motion"
     duration = 10
+    model = "gen3"
 
     print("📤 Submitting Runway job...")
     uid = start_runway_job(
         prompt=prompt,
-        model="gen3",
+        model=model,
         motion=5,
         width=1344,
         height=768,
-        duration=duration
+        duration=duration,
+        nsfw=True  # ⚠️ Allow adult content
     )
     print("📦 Job UUID:", uid)
 
     video_url = poll_runway_status(uid)
-    download_video(video_url, f"videos/runway-{uid}.mp4")
+    base_filename = f"videos/runway-{model}-{uid}"
+    download_video(video_url, base_filename)
 
     estimate_cost(seconds=duration)
     print("🎉 All done!")
