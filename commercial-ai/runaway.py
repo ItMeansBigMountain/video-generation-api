@@ -66,7 +66,7 @@ def estimate_cost(seconds, rate=0.02):
 # 🚀 Main entry
 if __name__ == "__main__":
     prompt = "A cinematic drone shot of a forest in autumn, golden leaves falling, sweeping motion"
-    duration = 5
+    duration = 10
 
     print("📤 Submitting Runway job...")
     uid = start_runway_job(
