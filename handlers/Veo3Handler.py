@@ -10,15 +10,11 @@ class Veo3Handler:
     def generate(self, prompt: str, *,
                  aspect_ratio: str = "16:9",
                  person_generation: str = "allow_adult",
-                 sample_count: int = 1,
-                 seed: int = None,
-                 output_gcs_uri: str = None):
+                 seed: int = None):
         config = GenerateVideosConfig(
             aspect_ratio=aspect_ratio,
             person_generation=person_generation,
-            sample_count=sample_count,
             seed=seed,
-            output_gcs_uri=output_gcs_uri,
         )
 
         operation = self.client.generate_videos(prompt=prompt, config=config)
