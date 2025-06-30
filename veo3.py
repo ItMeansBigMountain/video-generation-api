@@ -50,7 +50,9 @@ while not operation.done:
     sys.stdout.flush()
     spin_idx = (spin_idx + 1) % len(spinner)
     time.sleep(0.5)
+    print(client.operations)
     operation = client.operations.get(operation)
+
 print(f"\r✅ Video generation complete!           ")
 
 # 💾 Save videos
