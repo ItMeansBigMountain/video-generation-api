@@ -20,6 +20,7 @@ def create_kling_video(prompt, duration=5, aspect_ratio="16:9"):
     }
     response = requests.post(f"{BASE_URL}/submit", headers=headers, json=data)
     response.raise_for_status()
+    print(response.text)  # Debugging output
     return response.json().get("task_id")
 
 def poll_kling_video(task_id, interval=10, timeout=300):
