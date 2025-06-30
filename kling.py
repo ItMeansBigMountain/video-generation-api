@@ -3,6 +3,18 @@ import time
 import os
 from dotenv import load_dotenv
 
+
+# #### API NOTE #### #### ### #### #### ### ####
+    # 6/29/2025 : API COMING SOON
+
+# KLING DOCUMENTATION:
+    # https://app.klingai.com/global/dev/document-api/quickStart/productIntroduction/overview?gad_source=1&gad_campaignid=22687195893&gbraid=0AAAAA-NKDyDnxcGTokjU8PU_uIlk09442&gclid=Cj0KCQjwyIPDBhDBARIsAHJyyVht_75JkSRf8KDkrkRTSKb9a8YS-BPUmEy1lL2CFs_67GXtcos6BaQaApoBEALw_wcB
+
+# #### ### #### #### ### #### #### ### #### #### ### #### 
+
+
+
+
 load_dotenv()
 API_KEY = os.getenv("KLING_API_KEY")
 BASE_URL = "https://api.klingai.com/api/v1/video/t2v"
@@ -20,7 +32,7 @@ def create_kling_video(prompt, duration=5, aspect_ratio="16:9"):
     }
     response = requests.post(f"{BASE_URL}/submit", headers=headers, json=data)
     response.raise_for_status()
-    print(response.text)  # Debugging output
+    print(response.text)
     return response.json().get("task_id")
 
 def poll_kling_video(task_id, interval=10, timeout=300):
