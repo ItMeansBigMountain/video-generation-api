@@ -33,20 +33,20 @@ config = types.GenerateVideosConfig(
     seed=None, # optional for deterministic runs
 )
 
-# 🔥 Run generation
+# Run generation
+print(f"📽️ Generating video using model: {model}...")
 operation = client.models.generate_videos(
     model=model,  
     prompt=prompt,
     config=config
 )
-print(f"📽️ Generating video using model: {model}...")
 
 # ⏳ Poll status with spinner and status message
 spinner = ['|', '/', '-', '\\']
 spin_idx = 0
-print("⏳ Generating video, please wait...", end='', flush=True)
+print("⏳ Please wait...", end='', flush=True)
 while not operation.done:
-    sys.stdout.write(f"\r⏳ Generating video, please wait... {spinner[spin_idx]} ")
+    sys.stdout.write(f"\r⏳ Please wait... {spinner[spin_idx]} ")
     sys.stdout.flush()
     spin_idx = (spin_idx + 1) % len(spinner)
     time.sleep(0.5)
