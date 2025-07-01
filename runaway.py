@@ -82,7 +82,7 @@ def poll_runway_status(uuid, interval=10, timeout=600):
 # 💾 Download video file + save URL
 def download_video(video_url, filename="videos/runway-output"):
     os.makedirs("videos", exist_ok=True)
-    filename_txt = f"{filename}.txt"
+    filename_txt = f"runaway-video-urls.txt"
     filename_mp4 = f"{filename}.mp4"
 
     with open(filename_txt, "a") as f:
